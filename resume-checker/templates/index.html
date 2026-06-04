@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Resume Checker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-card">
+        <h1>AI Resume Checker</h1>
+        <p>Upload Resume • Paste Job Description • Get ATS Score</p>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="file" name="resume" required>
+
+            <textarea name="jobdesc" rows="6" placeholder="Paste Job Description here..."></textarea>
+
+            <button type="submit">Analyze Resume</button>
+
+        </form>
+    </div>
+
+    {% if data %}
+
+    <div class="dashboard">
+
+        <div class="box">
+            <h2>{{ data.score }}%</h2>
+            <p>Skill Match</p>
+        </div>
+
+        <div class="box">
+            <h2>{{ data.ats }}%</h2>
+            <p>ATS Score</p>
+        </div>
+
+        <div class="box">
+            <h2>{{ data.keywords }}</h2>
+            <p>Keywords Found</p>
+        </div>
+
+    </div>
+
+    <div class="results">
+
+        <div class="result-box">
+            <h3>Matched Skills</h3>
+            <ul>
+                {% for skill in data.matched %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-box">
+            <h3>Missing Skills</h3>
+            <ul>
+                {% for skill in data.missing %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
